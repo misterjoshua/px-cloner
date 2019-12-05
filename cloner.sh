@@ -1,7 +1,6 @@
 #!/bin/bash -e
 
 function testCommands() {
-  [ -z "$(command -v jq)" ] && die "Script requires the 'jq' command"
   [ -z "$(command -v kubectl)" ] && die "Script requires the 'kubectl' command"
 
   kubectl version &>/dev/null || die "Kubectl can't get the server version"
