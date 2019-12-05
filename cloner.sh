@@ -47,7 +47,6 @@ EOF
 
     echo "Submitting ApplicationClone request."
     kubectl -n kube-system apply -f- <<<"$CONFIG"
-    echo "ApplicationClone request has been submitted."
 
     DELAY=${DELAY:-1}
     until [ "$STAGE" = "Final" ]; do
