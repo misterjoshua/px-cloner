@@ -50,15 +50,11 @@ EOF
     kubectl -n kube-system apply -f- <<<"$CONFIG"
     echo "ApplicationClone request has been submitted."
 
-    DELAY=${DELAY:-5}
-    while true; do
+    DELAY=${DELAY:-1}
+    until [ "$STAGE" = "Final" ]; do
         sleep $DELAY
-
-        STAGE=$(kubectl -n kube-system get applicationclone $CLONE_NAME -o json | jq '.status.stage' --raw-output)
+        STAGE=$(kubectl -n kube-system get applicationclone $CLONE_NAME -o jsonpath="{ .status.stage }")
         echo "Application clone stage: $STAGE"
-        if [ "$STAGE" = "Final" ]; then
-            break
-        fi
     done
 
     echo "Restarting pods"
