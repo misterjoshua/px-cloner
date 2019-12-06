@@ -66,5 +66,11 @@ EOF
 FROM=$1
 TO=$2
 
+while getopts "v" OPTION; do
+    case "${OPTION}" in
+        v) echo "%%VERSION%%"; exit ;;
+    esac
+done
+
 testCommands
 cloneFromTo "$FROM" "$TO"
