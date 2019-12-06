@@ -10,7 +10,7 @@ param(
     $DestinationNamespace
 )
 
-function Test-Commands() {
+function Test-Commands {
     kubectl version >$null 2>$null
 }
 
