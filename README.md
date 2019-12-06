@@ -10,7 +10,6 @@ Bash Script:
 $ ./cloner.sh src-ns dest-ns
 Submitting ApplicationClone request.
 applicationclone.stork.libopenstorage.org/clone-src-ns-to-dest-ns-1575506800 created
-ApplicationClone request has been submitted.
 Application clone stage: Applications
 Application clone stage: Final
 Restarting pods
@@ -24,7 +23,6 @@ Powershell Script:
 PS C:\script> .\cloner.ps1 src-ns dest-ns
 Submitting ApplicationClone request.
 applicationclone.stork.libopenstorage.org/clone-src-ns-to-dest-ns-1575506800 created
-ApplicationClone request has been submitted.
 Application clone stage: Applications
 Application clone stage: Final
 Restarting pods
