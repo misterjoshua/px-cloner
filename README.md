@@ -29,3 +29,7 @@ Restarting pods
 pod "tiller-deploy-5cb54b77bc-ntgrc" deleted
 pod "wordpress-lamp-7f9cf9cffb-cqtpd" deleted
 ```
+
+## Skipping Resources
+
+To skip cloning specific resources from namespace to namespace, annotate the source resource with `stork.libopenstorage.org/skipresource` and Portworx & Stork should skip over it. This may be useful, for instance, if you're cloning an application from one environment to another, but want to leave the ingress resources alone. In this case, you'd annotate the ingress resources in the source namespace with `stork.libopenstorage.org/skipresource`.
