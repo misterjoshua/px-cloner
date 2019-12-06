@@ -1,13 +1,17 @@
 param(
     # Source namespace
-    [Parameter(Mandatory=$true, Position=0)]
+    [Parameter(Position=0)]
     [String]
     $SourceNamespace,
 
     # Destination namespace
-    [Parameter(Mandatory=$true, Position=1)]
+    [Parameter(Position=1)]
     [String]
-    $DestinationNamespace
+    $DestinationNamespace,
+
+    [Parameter()]
+    [switch]
+    $Version
 )
 
 function Test-Commands {
@@ -51,5 +55,13 @@ spec:
 
 $ErrorActionPreference = "Stop"
 
-Test-Commands
-New-ApplicationClone
+if ($Version) {
+    Write-Host "%%VERSION%%"
+} else {
+    if (-not $SourceNamespace) { throw "Missing SourceNamespace" }
+    if (-not $DestinationNamespace) { throw "Missing DestinationNamespace" }
+    if ($SourceNamespace -like $DestinationNamespace) { throw "SourceNamespace and DestinatioNamespace are the same" }
+    
+    Test-Commands
+    New-ApplicationClone
+}
