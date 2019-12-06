@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/v}
+      # Checkout
+      - uses: actions/checkout@v1
+      # Build
+      - name: Run the build script
+        run: ./build.sh
+        env:
+          VERSION: ${{ steps.get_version.outputs.VERSION }}
+      # Create a release
+      - uses: actions/create-release@v1
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          body: A new release!
+          draft: false
+          prerelease: false
+      # Upload an asset to the release
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/cloner.sh
+          asset_name: cloner.sh
+          asset_content_type: text/x-shellscript
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/cloner.ps1
+          asset_name: cloner.ps1
+          asset_content_type: text/x-shellscript
